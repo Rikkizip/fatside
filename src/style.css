@@ -1,6 +1,6 @@
 :root {
-  /* Brand color: #009a44 converted to OKLCH */
-  --color-brand: oklch(54.5% 0.155 155.5);
+  /* Brand color - must match manifest.json and meta theme-color exactly */
+  --color-brand: #009a44;
 
   /* White and transparency variants */
   --color-white: oklch(100% 0 0);
