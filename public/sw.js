@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fatside-v3'
+const CACHE_NAME = 'fatside-v4'
 const BASE = '/fatside/'
 const ASSETS = [
   BASE,

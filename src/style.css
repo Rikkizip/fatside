@@ -1,3 +1,15 @@
+:root {
+  /* Brand color: #009a44 converted to OKLCH */
+  --color-brand: oklch(54.5% 0.155 155.5);
+
+  /* White and transparency variants */
+  --color-white: oklch(100% 0 0);
+  --color-white-dim: oklch(100% 0 0 / 0.8);
+  --color-white-muted: oklch(100% 0 0 / 0.5);
+  --color-white-faint: oklch(100% 0 0 / 0.3);
+  --color-white-subtle: oklch(100% 0 0 / 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +17,8 @@
 }
 
 html, body {
-  background-color: #009a44;
-  color: #ffffff;
+  background-color: var(--color-brand);
+  color: var(--color-white);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
   min-height: 100dvh;
@@ -26,7 +38,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding-bottom: 16px;
-  border-bottom: 1.5px solid #ffffff;
+  border-bottom: 1.5px solid var(--color-white);
 }
 
 .logo {
@@ -43,16 +55,16 @@ header {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   background: transparent;
-  border: 1.5px solid #ffffff;
-  color: #ffffff;
+  border: 1.5px solid var(--color-white);
+  color: var(--color-white);
   padding: 8px 12px;
   cursor: pointer;
   font-family: inherit;
 }
 
 .btn-primary {
-  background: #ffffff;
-  color: #009a44;
+  background: var(--color-white);
+  color: var(--color-brand);
 }
 
 .btn-text {
@@ -62,7 +74,7 @@ header {
   text-transform: uppercase;
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: var(--color-white);
   cursor: pointer;
   font-family: inherit;
   padding: 0;
@@ -110,8 +122,8 @@ header {
 .onboarding-input {
   flex: 1;
   background: transparent;
-  border: 1.5px solid #ffffff;
-  color: #ffffff;
+  border: 1.5px solid var(--color-white);
+  color: var(--color-white);
   font-family: inherit;
   font-size: 48px;
   font-weight: 700;
@@ -121,12 +133,12 @@ header {
 }
 
 .onboarding-input::placeholder {
-  color: rgba(255,255,255,0.3);
+  color: var(--color-white-faint);
 }
 
 .onboarding-input:focus {
   outline: none;
-  background: rgba(255,255,255,0.1);
+  background: var(--color-white-subtle);
 }
 
 .onboarding-btn {
@@ -134,9 +146,9 @@ header {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: #ffffff;
-  border: 1.5px solid #ffffff;
-  color: #009a44;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-white);
+  color: var(--color-brand);
   padding: 16px 24px;
   cursor: pointer;
   font-family: inherit;
@@ -158,7 +170,7 @@ header {
 /* Handicap display */
 .handicap-section {
   padding: 48px 0;
-  border-bottom: 1.5px solid #ffffff;
+  border-bottom: 1.5px solid var(--color-white);
 }
 
 .handicap-label {
@@ -213,7 +225,7 @@ header {
 
 /* List */
 .list {
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid var(--color-white);
   border-bottom: none;
 }
 
@@ -222,12 +234,12 @@ header {
   grid-template-columns: 1fr auto;
   gap: 8px;
   padding: 14px 16px;
-  border-bottom: 1.5px solid #ffffff;
+  border-bottom: 1.5px solid var(--color-white);
   cursor: pointer;
 }
 
 .list-item:hover {
-  background: rgba(255,255,255,0.1);
+  background: var(--color-white-subtle);
 }
 
 .list-item-title {
@@ -259,7 +271,7 @@ header {
 
 /* Empty state */
 .empty-state {
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid var(--color-white);
   padding: 32px 16px;
   text-align: center;
 }
@@ -273,7 +285,7 @@ header {
 
 /* Add Form */
 .add-form {
-  border-bottom: 1.5px solid #ffffff;
+  border-bottom: 1.5px solid var(--color-white);
   padding: 16px;
 }
 
@@ -308,8 +320,8 @@ header {
 .form-input {
   width: 100%;
   background: transparent;
-  border: 1.5px solid #ffffff;
-  color: #ffffff;
+  border: 1.5px solid var(--color-white);
+  color: var(--color-white);
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
@@ -319,13 +331,13 @@ header {
 }
 
 .form-input::placeholder {
-  color: rgba(255,255,255,0.5);
+  color: var(--color-white-muted);
   font-weight: 400;
 }
 
 .form-input:focus {
   outline: none;
-  background: rgba(255,255,255,0.1);
+  background: var(--color-white-subtle);
 }
 
 .form-input[type="date"]::-webkit-calendar-picker-indicator {
@@ -344,9 +356,9 @@ header {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: #ffffff;
-  border: 1.5px solid #ffffff;
-  color: #009a44;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-white);
+  color: var(--color-brand);
   padding: 12px 16px;
   cursor: pointer;
   font-family: inherit;
@@ -358,8 +370,8 @@ header {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   background: transparent;
-  border: 1.5px solid #ffffff;
-  color: #ffffff;
+  border: 1.5px solid var(--color-white);
+  color: var(--color-white);
   padding: 8px 12px;
   cursor: pointer;
   font-family: inherit;
@@ -371,12 +383,12 @@ header {
   grid-template-columns: 1fr auto;
   gap: 4px;
   padding: 14px 16px;
-  border-bottom: 1.5px solid #ffffff;
+  border-bottom: 1.5px solid var(--color-white);
   cursor: pointer;
 }
 
 .course-item:hover {
-  background: rgba(255,255,255,0.1);
+  background: var(--color-white-subtle);
 }
 
 .course-name {
