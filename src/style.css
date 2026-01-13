@@ -22,6 +22,7 @@ html, body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
   min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 #app {
@@ -114,7 +115,7 @@ header {
 
 .onboarding-row {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   gap: 12px;
   margin-bottom: 24px;
 }
@@ -152,6 +153,7 @@ header {
   padding: 16px 24px;
   cursor: pointer;
   font-family: inherit;
+  flex-shrink: 0;
 }
 
 .onboarding-skip {
@@ -247,6 +249,9 @@ header {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .list-item-value {
@@ -301,10 +306,12 @@ header {
 
 .form-field {
   flex: 1;
+  min-width: 0;
 }
 
 .form-field.small {
   flex: 0 0 72px;
+  min-width: 0;
 }
 
 .form-label {
@@ -319,15 +326,20 @@ header {
 
 .form-input {
   width: 100%;
+  max-width: 100%;
   background: transparent;
   border: 1.5px solid var(--color-white);
   color: var(--color-white);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   padding: 10px 12px;
   text-transform: uppercase;
   letter-spacing: 0.01em;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  height: 44px;
 }
 
 .form-input::placeholder {
@@ -396,6 +408,9 @@ header {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .course-rating {
@@ -446,4 +461,36 @@ header {
 /* Utility */
 .hidden {
   display: none !important;
+}
+
+/* Small screen adjustments */
+@media (max-width: 360px) {
+  .handicap-number {
+    font-size: 56px;
+  }
+
+  .onboarding-input {
+    font-size: 36px;
+    padding: 12px 16px;
+  }
+
+  .onboarding-btn {
+    padding: 14px 24px;
+  }
+
+  .onboarding-question {
+    font-size: 24px;
+  }
+
+  .splash-logo {
+    font-size: 36px;
+  }
+
+  .form-row {
+    flex-wrap: wrap;
+  }
+
+  .form-field.small {
+    flex: 1 1 auto;
+  }
 }
