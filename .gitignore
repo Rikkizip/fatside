@@ -1,11 +1,2 @@
 node_modules
 .DS_Store
-.claude/
-files 2/
-
-# Mockup HTML files (keep src and dist)
-/home*.html
-/nav.html
-/onboarding.html
-/settings.html
-/splash*.html
