@@ -14,7 +14,14 @@ let state = {
   rounds: [],
   courses: [],
   showAddForm: false,
-  hasCompletedOnboarding: false
+  hasCompletedOnboarding: false,
+  expandedRoundId: null,
+  expandedCourseName: null
+}
+
+// Generate unique ID
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
 }
 
 // Load from localStorage
@@ -27,6 +34,17 @@ function loadState() {
     state.rounds = data.rounds || []
     state.courses = data.courses || []
     state.hasCompletedOnboarding = data.hasCompletedOnboarding || false
+
+    // Migrate: add IDs to rounds that don't have them
+    let needsSave = false
+    state.rounds = state.rounds.map(r => {
+      if (!r.id) {
+        needsSave = true
+        return { ...r, id: generateId() }
+      }
+      return r
+    })
+    if (needsSave) saveState()
   }
 }
 
@@ -209,14 +227,22 @@ function renderRoundsWithForm() {
       <button class="btn" data-action="toggleAddForm">+ Add</button>
     </div>
     <div class="list">
-      ${state.rounds.map(round => `
-        <div class="list-item">
-          <div class="list-item-title">${round.course}</div>
-          <div class="list-item-value">+${round.differential}</div>
-          <div class="list-item-meta">${formatDate(round.date)} · Par ${round.par}</div>
-          <div class="list-item-meta-right">${round.score}</div>
-        </div>
-      `).join('')}
+      ${state.rounds.map(round => {
+        const isExpanded = state.expandedRoundId === round.id
+        return `
+          <div class="list-item${isExpanded ? ' expanded' : ''}" data-action="toggleRoundExpand" data-params="${round.id}">
+            <div class="list-item-title">${round.course}</div>
+            <div class="list-item-value">+${round.differential}</div>
+            <div class="list-item-meta">${formatDate(round.date)} · Par ${round.par}</div>
+            <div class="list-item-meta-right">${round.score}</div>
+            ${isExpanded ? `
+              <div class="list-item-actions">
+                <button class="btn-delete" data-action="deleteRound" data-params="${round.id}">Delete</button>
+              </div>
+            ` : ''}
+          </div>
+        `
+      }).join('')}
     </div>
   `
 }
@@ -275,11 +301,18 @@ function renderAddForm() {
 function renderCoursesList() {
   return state.courses.map(course => {
     const roundsPlayed = getRoundsForCourse(course.name)
+    const isExpanded = state.expandedCourseName === course.name
     return `
-      <div class="course-item" data-action="selectCourse" data-params="${course.name}|${course.rating}|${course.slope}|${course.par}">
+      <div class="course-item${isExpanded ? ' expanded' : ''}" data-action="toggleCourseExpand" data-params="${course.name}">
         <div class="course-name">${course.name}</div>
         <div class="course-rating">${course.rating} / ${course.slope}</div>
         <div class="course-meta">Par ${course.par} · ${roundsPlayed} round${roundsPlayed !== 1 ? 's' : ''} played</div>
+        ${isExpanded ? `
+          <div class="course-item-actions">
+            <button class="btn-delete" data-action="deleteCourse" data-params="${course.name}">Delete</button>
+            <button class="btn-select" data-action="selectCourse" data-params="${course.name}|${course.rating}|${course.slope}|${course.par}">Select</button>
+          </div>
+        ` : ''}
       </div>
     `
   }).join('')
@@ -428,7 +461,7 @@ function saveRound() {
   const differential = calculateDifferential(score, rating, slope)
 
   // Add round
-  state.rounds.unshift({ course, rating, slope, par, score, date, differential })
+  state.rounds.unshift({ id: generateId(), course, rating, slope, par, score, date, differential })
 
   // Add/update course
   const existingCourse = state.courses.find(c => c.name === course)
@@ -468,10 +501,44 @@ function deleteAllData() {
       rounds: [],
       courses: [],
       showAddForm: false,
-      hasCompletedOnboarding: false
+      hasCompletedOnboarding: false,
+      expandedRoundId: null,
+      expandedCourseName: null
     }
     render()
   }
+}
+
+function toggleRoundExpand(roundId) {
+  state.expandedRoundId = state.expandedRoundId === roundId ? null : roundId
+  render()
+}
+
+function deleteRound(roundId) {
+  state.rounds = state.rounds.filter(r => r.id !== roundId)
+  state.expandedRoundId = null
+
+  // Recalculate handicap
+  if (state.rounds.length > 0) {
+    state.handicap = calculateHandicap(state.rounds)
+  } else {
+    state.handicap = null
+  }
+
+  saveState()
+  render()
+}
+
+function toggleCourseExpand(courseName) {
+  state.expandedCourseName = state.expandedCourseName === courseName ? null : courseName
+  render()
+}
+
+function deleteCourse(courseName) {
+  state.courses = state.courses.filter(c => c.name !== courseName)
+  state.expandedCourseName = null
+  saveState()
+  render()
 }
 
 // Event delegation for click handlers
@@ -491,14 +558,26 @@ document.addEventListener('click', function(e) {
   } else if (action === 'toggleAddForm') {
     toggleAddForm()
   } else if (action === 'selectCourse') {
+    e.stopPropagation()
+    state.expandedCourseName = null
     var parts = params.split('|')
     selectCourse(parts[0], parseFloat(parts[1]), parseInt(parts[2]), parseInt(parts[3]))
+  } else if (action === 'toggleCourseExpand') {
+    toggleCourseExpand(params)
+  } else if (action === 'deleteCourse') {
+    e.stopPropagation()
+    deleteCourse(params)
   } else if (action === 'saveRound') {
     saveRound()
   } else if (action === 'exportData') {
     exportData()
   } else if (action === 'deleteAllData') {
     deleteAllData()
+  } else if (action === 'toggleRoundExpand') {
+    toggleRoundExpand(params)
+  } else if (action === 'deleteRound') {
+    e.stopPropagation()
+    deleteRound(params)
   }
 })
 

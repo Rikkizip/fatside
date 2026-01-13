@@ -458,6 +458,57 @@ header {
   opacity: 0.5;
 }
 
+/* Expanded state for deletable items */
+.list-item.expanded,
+.course-item.expanded {
+  background: var(--color-white-subtle);
+}
+
+/* Actions row */
+.list-item-actions,
+.course-item-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-white-faint);
+}
+
+/* Delete button */
+.btn-delete {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1.5px solid var(--color-white-muted);
+  color: var(--color-white-muted);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-delete:hover {
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+
+/* Select button (for courses) */
+.btn-select {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-white);
+  color: var(--color-brand);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 /* Utility */
 .hidden {
   display: none !important;
