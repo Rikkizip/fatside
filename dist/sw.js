@@ -1,8 +1,9 @@
-const CACHE_NAME = 'fatside-v2'
+const CACHE_NAME = 'fatside-v3'
+const BASE = '/fatside/'
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/app.js'
+  BASE,
+  BASE + 'index.html',
+  BASE + 'app.js'
 ]
 
 // Clear old caches on activate

@@ -3,7 +3,7 @@ import './style.css'
 
 // Register service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
+  navigator.serviceWorker.register('/fatside/sw.js')
 }
 
 // State
